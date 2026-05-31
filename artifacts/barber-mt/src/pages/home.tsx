@@ -100,11 +100,21 @@ export default function Home() {
 
       {/* Navbar */}
       <nav className="fixed top-0 w-full z-50 flex items-center justify-between px-6 py-5 bg-background/85 backdrop-blur-md border-b border-border/40">
-        <img
-          src={logoImg}
-          alt="Joha Molinero Beauty Studio"
-          className="h-12 w-12 rounded-full object-cover"
-        />
+        <div className="flex items-center gap-3">
+          <img
+            src={logoImg}
+            alt="Joha Molinero Beauty Studio"
+            className="h-14 w-14 rounded-full object-cover ring-1 ring-primary/30"
+          />
+          <div className="flex flex-col leading-none">
+            <span className="font-serif text-base font-light tracking-[0.2em] text-foreground uppercase">
+              Joha Molinero
+            </span>
+            <span className="font-sans text-[9px] tracking-[0.4em] text-primary uppercase font-medium mt-0.5">
+              Beauty Studio
+            </span>
+          </div>
+        </div>
         <button
           onClick={handleBooking}
           data-testid="button-nav-booking"
