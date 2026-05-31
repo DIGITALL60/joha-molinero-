@@ -1,6 +1,5 @@
 import { motion } from "framer-motion";
 import { Clock, MapPin, Instagram, ChevronRight, Sparkles } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { useState } from "react";
 
 const sectors = [
@@ -92,7 +91,7 @@ export default function Home() {
   const [openSector, setOpenSector] = useState<string | null>(null);
 
   const handleBooking = () => {
-    window.open("https://wa.me/", "_blank");
+    window.open("https://wa.link/pga9u0", "_blank");
   };
 
   return (
@@ -101,11 +100,11 @@ export default function Home() {
       {/* Navbar */}
       <nav className="fixed top-0 w-full z-50 flex items-center justify-between px-6 py-5 bg-background/85 backdrop-blur-md border-b border-border/40">
         <div className="flex flex-col leading-none">
-          <span className="font-serif text-2xl font-light tracking-[0.25em] text-foreground uppercase">
-            Beauty
+          <span className="font-serif text-xl font-light tracking-[0.2em] text-foreground uppercase">
+            Joha Molinero
           </span>
-          <span className="font-sans text-[10px] tracking-[0.4em] text-primary uppercase font-medium">
-            Estudio
+          <span className="font-sans text-[9px] tracking-[0.4em] text-primary uppercase font-medium">
+            Beauty Studio
           </span>
         </div>
         <button
@@ -148,7 +147,7 @@ export default function Home() {
               transition={{ duration: 1.2, delay: 0.2 }}
               className="text-primary font-sans text-xs uppercase tracking-[0.4em] mb-8"
             >
-              Beauty Estudio · Buenos Aires
+              Joha Molinero Beauty Studio · Río Segundo, Cba
             </motion.p>
 
             <h1 className="font-serif font-light text-6xl md:text-8xl lg:text-9xl text-foreground leading-[0.9] mb-8">
@@ -349,7 +348,7 @@ export default function Home() {
               <MapPin className="w-5 h-5 text-primary" />
               <h4 className="font-serif text-xl font-light text-foreground">Ubicación</h4>
               <p className="font-sans text-sm text-muted-foreground leading-relaxed">
-                Buenos Aires, Argentina<br />
+                Río Segundo, Córdoba<br />
                 <span className="text-primary/70 text-xs">(Dirección exacta al reservar)</span>
               </p>
             </motion.div>
@@ -366,7 +365,7 @@ export default function Home() {
 
             <motion.a
               variants={fadeUp}
-              href="https://instagram.com/"
+              href="https://instagram.com/estudiojohamolinero"
               target="_blank"
               rel="noopener noreferrer"
               data-testid="link-instagram"
@@ -376,7 +375,7 @@ export default function Home() {
               <h4 className="font-serif text-xl font-light text-foreground">Seguinos</h4>
               <p className="font-sans text-sm text-muted-foreground leading-relaxed">
                 Instagram<br />
-                <span className="text-primary text-xs group-hover:underline">@beautyestudio</span>
+                <span className="text-primary text-xs group-hover:underline">@estudiojohamolinero</span>
               </p>
             </motion.a>
           </motion.div>
@@ -387,8 +386,8 @@ export default function Home() {
       <footer className="border-t border-border/40 py-14 px-6">
         <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
           <div className="flex flex-col items-center md:items-start leading-none">
-            <span className="font-serif text-xl font-light tracking-[0.25em] text-foreground uppercase">Beauty</span>
-            <span className="font-sans text-[9px] tracking-[0.4em] text-primary uppercase">Estudio</span>
+            <span className="font-serif text-xl font-light tracking-[0.2em] text-foreground uppercase">Joha Molinero</span>
+            <span className="font-sans text-[9px] tracking-[0.4em] text-primary uppercase">Beauty Studio</span>
           </div>
 
           <div className="flex flex-wrap justify-center gap-8">
@@ -409,7 +408,7 @@ export default function Home() {
           </div>
 
           <p className="font-sans text-xs text-muted-foreground/50 tracking-widest uppercase">
-            © {new Date().getFullYear()} Beauty Estudio
+            © {new Date().getFullYear()} Joha Molinero Beauty Studio
           </p>
         </div>
       </footer>
