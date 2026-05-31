@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Clock, MapPin, Instagram, ChevronRight, Sparkles } from "lucide-react";
 import { useState } from "react";
+import logoImg from "@assets/logo_studio_1780264627031.jpeg";
 
 const sectors = [
   {
@@ -99,14 +100,11 @@ export default function Home() {
 
       {/* Navbar */}
       <nav className="fixed top-0 w-full z-50 flex items-center justify-between px-6 py-5 bg-background/85 backdrop-blur-md border-b border-border/40">
-        <div className="flex flex-col leading-none">
-          <span className="font-serif text-xl font-light tracking-[0.2em] text-foreground uppercase">
-            Joha Molinero
-          </span>
-          <span className="font-sans text-[9px] tracking-[0.4em] text-primary uppercase font-medium">
-            Beauty Studio
-          </span>
-        </div>
+        <img
+          src={logoImg}
+          alt="Joha Molinero Beauty Studio"
+          className="h-12 w-12 rounded-full object-cover"
+        />
         <button
           onClick={handleBooking}
           data-testid="button-nav-booking"
@@ -385,10 +383,11 @@ export default function Home() {
       {/* Footer */}
       <footer className="border-t border-border/40 py-14 px-6">
         <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
-          <div className="flex flex-col items-center md:items-start leading-none">
-            <span className="font-serif text-xl font-light tracking-[0.2em] text-foreground uppercase">Joha Molinero</span>
-            <span className="font-sans text-[9px] tracking-[0.4em] text-primary uppercase">Beauty Studio</span>
-          </div>
+          <img
+            src={logoImg}
+            alt="Joha Molinero Beauty Studio"
+            className="h-12 w-12 rounded-full object-cover opacity-80"
+          />
 
           <div className="flex flex-wrap justify-center gap-8">
             <button
