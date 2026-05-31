@@ -1,123 +1,302 @@
-import React from "react";
 import { motion } from "framer-motion";
-import { Scissors, Clock, MapPin, Instagram, Phone, ChevronRight } from "lucide-react";
+import { Clock, MapPin, Instagram, ChevronRight, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useState } from "react";
 
-import heroImg from "@assets/IMG_2908_1780260666919.png";
-
-const services = [
-  { name: "Corte Clásico", price: "$6.000", desc: "Tijera o máquina. Lavado incluido." },
-  { name: "Corte & Barba", price: "$9.000", desc: "Servicio completo con toalla caliente." },
-  { name: "Solo Barba", price: "$4.000", desc: "Perfilado y cuidado." },
-  { name: "Corte Kids", price: "$5.000", desc: "Para los más chicos (hasta 12 años)." },
+const sectors = [
+  {
+    id: "unas",
+    label: "Sector Uñas",
+    icon: "✦",
+    services: [
+      { name: "Manicuría Simple", duration: "45 min", cod: "MANS1" },
+      { name: "Esmaltado Tradicional", duration: "1 hs", cod: "TRADI1" },
+      { name: "Esmaltado Semipermanente", duration: "1:30 hs", cod: "SEMI1" },
+      { name: "Adicional de Capping", duration: "30 min", cod: "CAPP1" },
+      { name: "Softgel", duration: "2:00 hs", cod: "SEMI1" },
+    ],
+  },
+  {
+    id: "pies",
+    label: "Sector Pies",
+    icon: "✦",
+    services: [
+      { name: "Belleza de Pies", duration: "1 hora", cod: "PIESB1" },
+      { name: "Pedicuría Premium", duration: "1:00 hora", cod: "PIESP1" },
+      { name: "Pedicuría Jelly", duration: "1:00 hora", cod: "PIESJ1" },
+    ],
+  },
+  {
+    id: "cejas",
+    label: "Cejas y Pestañas",
+    icon: "✦",
+    services: [
+      { name: "Perfilado de Cejas", duration: "30 min", cod: "PERFC1" },
+      { name: "Cejas con Henna", duration: "1 hora", cod: "PERFH1" },
+      { name: "Laminado de Cejas", duration: "1 hora", cod: "PERFLAM1" },
+      { name: "Lifting de Pestañas", duration: "1:30 hs", cod: "LIFT1" },
+      { name: "Depilación de Rostro", duration: "30 min", cod: "DEPI1" },
+    ],
+  },
+  {
+    id: "depi",
+    label: "Depi Definitiva",
+    icon: "✦",
+    services: [
+      { name: "Depi Definitiva / Láser Diodo", duration: "15/30 min", cod: "DEPI1" },
+    ],
+  },
+  {
+    id: "solar",
+    label: "Cama Solar",
+    icon: "✦",
+    services: [
+      { name: "Cama Solar", duration: "6' / 9' / 12' / 15'", cod: "CS1" },
+    ],
+  },
+  {
+    id: "facial",
+    label: "Sector Facial",
+    icon: "✦",
+    services: [
+      { name: "Limpieza Facial Básica", duration: "1 hora", cod: "LIMPB1" },
+      { name: "Limpieza Facial Profunda", duration: "1:30 hs", cod: "LIMPP2" },
+      { name: "Limpieza Facial Premium", duration: "1:30 hs", cod: "LIMPPREM3" },
+      { name: "Tratamiento Dermaplaning", duration: "2:00 hs", cod: "LIMPPREM3" },
+      { name: "Tratamiento Despigmentante", duration: "2:00 hs", cod: "DESP2" },
+      { name: "Tratamiento Antiage", duration: "2:00 hs", cod: "ANTIAGE1" },
+    ],
+  },
+  {
+    id: "eventos",
+    label: "Catálogo Eventos",
+    icon: "✦",
+    services: [
+      { name: "Peinados Sociales", duration: "1 hora", cod: "PEIN1" },
+      { name: "Maquillaje Social", duration: "1 hora", cod: "MAQ1" },
+    ],
+  },
 ];
 
-const staggerContainer = {
-  hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.2
-    }
-  }
+const fadeUp = {
+  hidden: { opacity: 0, y: 28 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.65, ease: "easeOut" } },
 };
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 30 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
+const stagger = {
+  hidden: { opacity: 0 },
+  show: { opacity: 1, transition: { staggerChildren: 0.1 } },
 };
 
 export default function Home() {
+  const [openSector, setOpenSector] = useState<string | null>(null);
+
   const handleBooking = () => {
-    window.location.href = "https://wa.me/";
+    window.open("https://wa.me/", "_blank");
   };
 
   return (
-    <div className="bg-background text-foreground min-h-screen selection:bg-primary selection:text-black">
-      
+    <div className="bg-background text-foreground min-h-screen overflow-x-hidden">
+
       {/* Navbar */}
-      <nav className="fixed top-0 w-full z-50 flex items-center justify-between px-6 py-4 bg-background/80 backdrop-blur-md border-b border-border/50">
-        <div className="font-display text-2xl tracking-wider text-white">BARBER M.T</div>
-        <Button onClick={handleBooking} variant="default" className="font-display tracking-widest text-sm rounded-none uppercase">
+      <nav className="fixed top-0 w-full z-50 flex items-center justify-between px-6 py-5 bg-background/85 backdrop-blur-md border-b border-border/40">
+        <div className="flex flex-col leading-none">
+          <span className="font-serif text-2xl font-light tracking-[0.25em] text-foreground uppercase">
+            Beauty
+          </span>
+          <span className="font-sans text-[10px] tracking-[0.4em] text-primary uppercase font-medium">
+            Estudio
+          </span>
+        </div>
+        <button
+          onClick={handleBooking}
+          data-testid="button-nav-booking"
+          className="border border-primary text-primary font-sans text-xs tracking-[0.25em] uppercase px-5 py-2.5 hover:bg-primary hover:text-background transition-all duration-300"
+        >
           Reservar
-        </Button>
+        </button>
       </nav>
 
-      {/* Hero Section */}
-      <section className="relative h-[100dvh] flex items-center justify-center overflow-hidden">
+      {/* Hero */}
+      <section className="relative min-h-[100dvh] flex items-center justify-center overflow-hidden">
+        {/* Gradient backdrop */}
         <div className="absolute inset-0 z-0">
-          <img 
-            src={heroImg} 
-            alt="Barber M.T Interior" 
-            className="w-full h-full object-cover"
+          <div className="absolute inset-0 bg-gradient-to-br from-[hsl(270_20%_8%)] via-[hsl(300_10%_6%)] to-[hsl(340_15%_5%)]" />
+          {/* Subtle radial glow */}
+          <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full bg-primary/8 blur-[120px]" />
+          <div className="absolute bottom-0 right-0 w-[400px] h-[400px] rounded-full bg-[hsl(300_30%_30%)]/10 blur-[100px]" />
+          {/* Fine grid */}
+          <div
+            className="absolute inset-0 opacity-[0.035]"
+            style={{
+              backgroundImage:
+                "linear-gradient(hsl(var(--border)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--border)) 1px, transparent 1px)",
+              backgroundSize: "60px 60px",
+            }}
           />
-          <div className="absolute inset-0 bg-black/60 bg-gradient-to-t from-background via-background/80 to-transparent" />
         </div>
 
-        <div className="relative z-10 text-center px-4 max-w-4xl mx-auto flex flex-col items-center">
+        <div className="relative z-10 text-center px-6 max-w-3xl mx-auto">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
+            transition={{ duration: 1, ease: "easeOut" }}
           >
-            <p className="text-primary font-display tracking-[0.2em] mb-4 text-sm md:text-base">
-              BARBER M.T · BUENOS AIRES
-            </p>
-            <h1 className="font-display text-6xl md:text-8xl lg:text-9xl text-white leading-[0.85] mb-6 drop-shadow-lg">
-              PARA UN BUEN DÍA,<br />
-              <span className="text-primary">UN BUEN CORTE.</span>
+            <motion.p
+              initial={{ opacity: 0, letterSpacing: "0.2em" }}
+              animate={{ opacity: 1, letterSpacing: "0.4em" }}
+              transition={{ duration: 1.2, delay: 0.2 }}
+              className="text-primary font-sans text-xs uppercase tracking-[0.4em] mb-8"
+            >
+              Beauty Estudio · Buenos Aires
+            </motion.p>
+
+            <h1 className="font-serif font-light text-6xl md:text-8xl lg:text-9xl text-foreground leading-[0.9] mb-8">
+              Tu mejor{" "}
+              <em className="not-italic text-primary">versión</em>
+              ,<br />
+              cada visita.
             </h1>
-            <p className="text-gray-300 max-w-xl mx-auto text-lg md:text-xl font-light mb-10">
+
+            <p className="font-sans font-light text-muted-foreground text-base md:text-lg tracking-wide mb-12 max-w-md mx-auto">
               Reservá tu turno online en segundos. Sin esperas, sin llamadas.
             </p>
-            <Button 
-              onClick={handleBooking}
-              className="bg-primary hover:bg-primary/90 text-black font-display text-xl px-10 py-7 rounded-none transition-all duration-300 hover:scale-105 uppercase tracking-wider group flex items-center gap-3"
+
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.6 }}
+              className="flex flex-col sm:flex-row gap-4 justify-center"
             >
-              RESERVAR TURNO
-              <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </Button>
+              <button
+                onClick={handleBooking}
+                data-testid="button-hero-booking"
+                className="group bg-primary text-background font-sans text-xs tracking-[0.3em] uppercase px-10 py-4 hover:bg-primary/90 transition-all duration-300 flex items-center justify-center gap-3"
+              >
+                Reservar Turno
+                <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </button>
+              <button
+                onClick={() => {
+                  document.getElementById("servicios")?.scrollIntoView({ behavior: "smooth" });
+                }}
+                data-testid="button-hero-services"
+                className="border border-border text-muted-foreground font-sans text-xs tracking-[0.3em] uppercase px-10 py-4 hover:border-primary hover:text-primary transition-all duration-300"
+              >
+                Ver Servicios
+              </button>
+            </motion.div>
           </motion.div>
         </div>
+
+        {/* Scroll indicator */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.5, duration: 0.8 }}
+          className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+        >
+          <motion.div
+            animate={{ y: [0, 8, 0] }}
+            transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+            className="w-px h-12 bg-gradient-to-b from-primary/60 to-transparent"
+          />
+        </motion.div>
       </section>
 
-      {/* Services Section */}
-      <section className="py-24 md:py-32 px-6 relative bg-background">
-        <div className="max-w-6xl mx-auto">
-          <motion.div 
+      {/* Intro strip */}
+      <section className="py-12 border-y border-border/40 overflow-hidden bg-card/30">
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="flex items-center justify-center gap-12 flex-wrap px-6"
+        >
+          {["Manicuría & Pedicuría", "Cejas & Pestañas", "Tratamientos Faciales", "Láser Diodo", "Cama Solar", "Eventos & Maquillaje"].map((item) => (
+            <span key={item} className="font-sans text-xs tracking-[0.3em] text-muted-foreground uppercase flex items-center gap-3">
+              <span className="text-primary text-xs">✦</span>
+              {item}
+            </span>
+          ))}
+        </motion.div>
+      </section>
+
+      {/* Services */}
+      <section id="servicios" className="py-28 px-6">
+        <div className="max-w-5xl mx-auto">
+          <motion.div
             initial="hidden"
             whileInView="show"
-            viewport={{ once: true, margin: "-100px" }}
-            variants={staggerContainer}
-            className="grid grid-cols-1 md:grid-cols-2 gap-16"
+            viewport={{ once: true, margin: "-80px" }}
+            variants={stagger}
           >
-            <div>
-              <motion.h2 variants={fadeUp} className="font-display text-5xl md:text-7xl mb-6 text-white leading-none">
-                NUESTROS<br />SERVICIOS
-              </motion.h2>
-              <motion.p variants={fadeUp} className="text-gray-400 text-lg mb-8 max-w-md">
-                Cortes de precisión, atención al detalle y un ambiente pensado para tu comodidad. Solo trabajamos con los mejores productos.
-              </motion.p>
-              <motion.div variants={fadeUp}>
-                <img src="/images/tools.jpg" alt="Barber Tools" className="w-full aspect-[4/3] object-cover grayscale opacity-80 hover:grayscale-0 transition-all duration-700" />
-              </motion.div>
-            </div>
+            <motion.div variants={fadeUp} className="mb-16 text-center">
+              <p className="font-sans text-xs tracking-[0.4em] text-primary uppercase mb-4">Nuestros Servicios</p>
+              <h2 className="font-serif font-light text-5xl md:text-6xl text-foreground">
+                Todo lo que necesitás,<br />
+                <em className="not-italic text-primary">en un solo lugar.</em>
+              </h2>
+            </motion.div>
 
-            <div className="flex flex-col justify-center space-y-8">
-              {services.map((service, idx) => (
-                <motion.div 
-                  key={idx}
-                  variants={fadeUp}
-                  className="group cursor-pointer"
-                >
-                  <div className="flex justify-between items-baseline mb-2">
-                    <h3 className="font-display text-2xl md:text-3xl text-white group-hover:text-primary transition-colors tracking-wide">
-                      {service.name}
-                    </h3>
-                    <div className="flex-grow border-b border-dashed border-gray-700 mx-4 opacity-50 relative top-[-6px]" />
-                    <span className="font-display text-xl text-primary">{service.price}</span>
-                  </div>
-                  <p className="text-gray-400 font-light">{service.desc}</p>
+            <div className="space-y-0 divide-y divide-border/40">
+              {sectors.map((sector) => (
+                <motion.div key={sector.id} variants={fadeUp}>
+                  <button
+                    data-testid={`button-sector-${sector.id}`}
+                    onClick={() => setOpenSector(openSector === sector.id ? null : sector.id)}
+                    className="w-full flex items-center justify-between py-7 group text-left"
+                  >
+                    <div className="flex items-center gap-5">
+                      <span className="text-primary text-xs font-sans">✦</span>
+                      <span className="font-serif text-2xl md:text-3xl font-light text-foreground group-hover:text-primary transition-colors duration-300">
+                        {sector.label}
+                      </span>
+                      <span className="font-sans text-xs text-muted-foreground tracking-wider hidden sm:inline">
+                        {sector.services.length} {sector.services.length === 1 ? "servicio" : "servicios"}
+                      </span>
+                    </div>
+                    <ChevronRight
+                      className={`w-4 h-4 text-primary transition-transform duration-300 ${openSector === sector.id ? "rotate-90" : ""}`}
+                    />
+                  </button>
+
+                  {/* Expanded services */}
+                  <motion.div
+                    initial={false}
+                    animate={
+                      openSector === sector.id
+                        ? { height: "auto", opacity: 1 }
+                        : { height: 0, opacity: 0 }
+                    }
+                    transition={{ duration: 0.35, ease: "easeInOut" }}
+                    className="overflow-hidden"
+                  >
+                    <div className="pb-8 pl-9 space-y-0 divide-y divide-border/20">
+                      {sector.services.map((service, idx) => (
+                        <div
+                          key={idx}
+                          data-testid={`row-service-${service.cod}`}
+                          className="flex items-center justify-between py-4 group/item"
+                        >
+                          <div className="flex items-center gap-6">
+                            <span className="font-sans text-sm text-foreground/80 group-hover/item:text-foreground transition-colors">
+                              {service.name}
+                            </span>
+                            <span className="font-sans text-xs text-muted-foreground tracking-wider hidden sm:inline">
+                              {service.duration}
+                            </span>
+                          </div>
+                          <button
+                            onClick={handleBooking}
+                            data-testid={`button-book-${service.cod}`}
+                            className="font-sans text-[10px] tracking-[0.25em] uppercase text-primary border border-primary/30 px-4 py-1.5 hover:bg-primary hover:text-background transition-all duration-200 opacity-0 group-hover/item:opacity-100"
+                          >
+                            Reservar
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  </motion.div>
                 </motion.div>
               ))}
             </div>
@@ -125,97 +304,113 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Vibe / Gallery Section */}
-      <section className="py-24 bg-[#050505] overflow-hidden">
-        <div className="max-w-7xl mx-auto px-6">
-          <motion.div
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, margin: "-100px" }}
-            variants={staggerContainer}
-            className="grid grid-cols-1 md:grid-cols-3 gap-6"
-          >
-            <motion.div variants={fadeUp} className="col-span-1 md:col-span-2">
-              <div className="relative aspect-video overflow-hidden group">
-                <img src="/images/interior.jpg" alt="Interior" className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 opacity-80" />
-                <div className="absolute inset-0 border border-primary/20 m-4 pointer-events-none" />
-              </div>
-            </motion.div>
-            <motion.div variants={fadeUp} className="col-span-1">
-              <div className="relative h-full min-h-[300px] overflow-hidden group">
-                <img src="/images/haircut.jpg" alt="Haircut" className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 opacity-80" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex flex-col justify-end p-8">
-                  <h3 className="font-display text-3xl text-white">EL ARTE DEL DETALLE</h3>
-                </div>
-              </div>
-            </motion.div>
+      {/* CTA Banner */}
+      <section className="py-24 px-6 relative overflow-hidden border-y border-border/40">
+        <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-primary/10 to-primary/5" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] rounded-full bg-primary/8 blur-[80px]" />
+        <motion.div
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true }}
+          variants={stagger}
+          className="relative z-10 max-w-2xl mx-auto text-center"
+        >
+          <motion.div variants={fadeUp}>
+            <Sparkles className="w-6 h-6 text-primary mx-auto mb-6 opacity-70" />
+            <h2 className="font-serif font-light text-4xl md:text-5xl text-foreground mb-4">
+              Lista para tu próximo turno?
+            </h2>
+            <p className="font-sans text-sm text-muted-foreground tracking-wide mb-10">
+              Reservá en segundos por WhatsApp. Sin esperas, sin llamadas.
+            </p>
+            <button
+              onClick={handleBooking}
+              data-testid="button-cta-booking"
+              className="group bg-primary text-background font-sans text-xs tracking-[0.35em] uppercase px-14 py-5 hover:bg-primary/90 transition-all duration-300 inline-flex items-center gap-3"
+            >
+              Reservar Ahora
+              <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </button>
           </motion.div>
-        </div>
+        </motion.div>
       </section>
 
-      {/* Info / Contact Section */}
-      <section className="py-24 px-6 border-t border-border">
-        <div className="max-w-4xl mx-auto text-center">
+      {/* Info Cards */}
+      <section className="py-24 px-6">
+        <div className="max-w-5xl mx-auto">
           <motion.div
             initial="hidden"
             whileInView="show"
-            viewport={{ once: true }}
-            variants={staggerContainer}
-            className="space-y-12"
+            viewport={{ once: true, margin: "-80px" }}
+            variants={stagger}
+            className="grid grid-cols-1 md:grid-cols-3 gap-px bg-border/30"
           >
-            <motion.h2 variants={fadeUp} className="font-display text-5xl md:text-7xl text-white">
-              LISTO PARA UN CAMBIO?
-            </motion.h2>
-
-            <motion.div variants={fadeUp} className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div className="flex flex-col items-center space-y-4 p-6 bg-card border border-border/50 hover:border-primary/50 transition-colors">
-                <MapPin className="w-8 h-8 text-primary" />
-                <h4 className="font-display text-2xl tracking-wide text-white">UBICACIÓN</h4>
-                <p className="text-gray-400 text-sm">Buenos Aires, Argentina<br/>(Dirección exacta al reservar)</p>
-              </div>
-
-              <div className="flex flex-col items-center space-y-4 p-6 bg-card border border-border/50 hover:border-primary/50 transition-colors">
-                <Clock className="w-8 h-8 text-primary" />
-                <h4 className="font-display text-2xl tracking-wide text-white">HORARIOS</h4>
-                <p className="text-gray-400 text-sm">Mar a Sab: 10:00 - 20:00<br/>Dom y Lun: Cerrado</p>
-              </div>
-
-              <a href="https://instagram.com/mtbarbervm" target="_blank" rel="noopener noreferrer" className="flex flex-col items-center space-y-4 p-6 bg-card border border-border/50 hover:border-primary/50 transition-colors group cursor-pointer">
-                <Instagram className="w-8 h-8 text-primary group-hover:scale-110 transition-transform" />
-                <h4 className="font-display text-2xl tracking-wide text-white">SÍGUENOS</h4>
-                <p className="text-gray-400 text-sm">@MTBARBERVM</p>
-              </a>
+            <motion.div variants={fadeUp} className="bg-background p-10 flex flex-col gap-4">
+              <MapPin className="w-5 h-5 text-primary" />
+              <h4 className="font-serif text-xl font-light text-foreground">Ubicación</h4>
+              <p className="font-sans text-sm text-muted-foreground leading-relaxed">
+                Buenos Aires, Argentina<br />
+                <span className="text-primary/70 text-xs">(Dirección exacta al reservar)</span>
+              </p>
             </motion.div>
 
-            <motion.div variants={fadeUp} className="pt-8">
-              <Button 
-                onClick={handleBooking}
-                className="bg-primary hover:bg-primary/90 text-black font-display text-2xl px-12 py-8 rounded-none uppercase tracking-widest w-full md:w-auto"
-              >
-                RESERVAR AHORA
-              </Button>
+            <motion.div variants={fadeUp} className="bg-background p-10 flex flex-col gap-4">
+              <Clock className="w-5 h-5 text-primary" />
+              <h4 className="font-serif text-xl font-light text-foreground">Horarios</h4>
+              <p className="font-sans text-sm text-muted-foreground leading-relaxed">
+                Martes a Sábado<br />
+                10:00 — 20:00 hs<br />
+                <span className="text-primary/70 text-xs">Dom y Lun: Cerrado</span>
+              </p>
             </motion.div>
+
+            <motion.a
+              variants={fadeUp}
+              href="https://instagram.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              data-testid="link-instagram"
+              className="bg-background p-10 flex flex-col gap-4 group hover:bg-card transition-colors duration-300"
+            >
+              <Instagram className="w-5 h-5 text-primary group-hover:scale-110 transition-transform" />
+              <h4 className="font-serif text-xl font-light text-foreground">Seguinos</h4>
+              <p className="font-sans text-sm text-muted-foreground leading-relaxed">
+                Instagram<br />
+                <span className="text-primary text-xs group-hover:underline">@beautyestudio</span>
+              </p>
+            </motion.a>
           </motion.div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="bg-black py-12 border-t border-border">
-        <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
-          <div className="font-display text-3xl tracking-widest text-white">BARBER M.T</div>
-          
-          <div className="flex flex-wrap justify-center gap-6 text-sm text-gray-500">
-            <button onClick={handleBooking} className="hover:text-primary transition-colors flex items-center gap-2">
-              <Phone className="w-4 h-4" /> Bot de Reservas
+      <footer className="border-t border-border/40 py-14 px-6">
+        <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
+          <div className="flex flex-col items-center md:items-start leading-none">
+            <span className="font-serif text-xl font-light tracking-[0.25em] text-foreground uppercase">Beauty</span>
+            <span className="font-sans text-[9px] tracking-[0.4em] text-primary uppercase">Estudio</span>
+          </div>
+
+          <div className="flex flex-wrap justify-center gap-8">
+            <button
+              onClick={handleBooking}
+              data-testid="button-footer-bot"
+              className="font-sans text-xs tracking-[0.2em] uppercase text-muted-foreground hover:text-primary transition-colors"
+            >
+              Bot de Reservas
             </button>
-            <button onClick={handleBooking} className="hover:text-primary transition-colors flex items-center gap-2">
-              <Scissors className="w-4 h-4" /> Atención Barbero (MT)
+            <button
+              onClick={handleBooking}
+              data-testid="button-footer-atencion"
+              className="font-sans text-xs tracking-[0.2em] uppercase text-muted-foreground hover:text-primary transition-colors"
+            >
+              Atención al Cliente
             </button>
           </div>
-          
-          <div className="text-gray-600 text-xs uppercase tracking-widest font-light">
-            © {new Date().getFullYear()} Barber M.T
-          </div>
+
+          <p className="font-sans text-xs text-muted-foreground/50 tracking-widest uppercase">
+            © {new Date().getFullYear()} Beauty Estudio
+          </p>
         </div>
       </footer>
     </div>
